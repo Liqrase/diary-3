@@ -43,7 +43,7 @@ method属性さん「post型(formで送る場合は他はget型のみ)送るよ�
 type="submit"属性さん「ここを押したタイミングで送るよ」<br>
 で、以下のファイルに送られる。
 
-```Java
+```java
 package controller; 
 // コントローラ層のパッケージに属していることを示しますわ
 
