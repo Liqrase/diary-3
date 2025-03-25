@@ -1,4 +1,4 @@
-[Diary-2](https://liqrase.github.io/diary-2/)
+[Diary-3](https://liqrase.github.io/diary-3/)
 
 # Flexible-Jekyll is a simple and clean theme for Jekyll
 
