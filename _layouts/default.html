@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+{% include head.html %}
+<body>
+
+  <div class="wrapper">
+    {{ content }}
+  </div>
+  
+  <script src="{{ '/assets/js/open-external-links.js' | relative_url }}"></script>
+
+  {% include analytics.html %}
+  
+</body>
+</html>

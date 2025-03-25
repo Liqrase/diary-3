@@ -1,0 +1,34 @@
+---
+layout: post
+title: だらけたので
+date: 2025-03-24 21:00:00
+description:  # Add post description (optional)
+img: postimg/sleep_gorogoro_ojisan.png # Add image post (optional)
+fig-caption: # Add figcaption (optional)
+tags: [日記]
+---
+今日から日々の振り返り用に、普通の日記も書いていこうと思います。<br>
+
+先週は、本当はJavasilverの演習をしないといけないところだったのですが、<br>
+まるまる一週間だらけてしまい、何もしませんでした…。<br>
+今日は目覚めとともに肌感覚で危機感が…！<br>
+今週はぶれていた軸をプログラミングに戻して、<br>
+日曜日にOracleJavasilverに合格することを目指します。<br>
+
+その他やりたいこと：<br>
+>ビジネスシューズを買う<br>
+>スーツを買う<br>
+><br>
+>随時追加...
+
+今日はJSPとJDBC、そしてアーキテクチャについて学びました。<br>
+DAO？　DTO？　
+#### ？？？？<br>
+「Ligraseくんは分かってるから大丈夫だよね。」<br>
+・・・<br>
+#### 分からんわ！！！
+くっ・・・分かっていたら、私も説明できるくらいわかっていたら、隣の人も私にたずねる！<br>
+わざわざ遠くにいる人を召喚しないのにっ！！<br>
+#### さみしすぎる！！<br>
+私も聞かれてしっかり答えたい！！<br>
+この気持ちを忘れずに頑張ります…！
