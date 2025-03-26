@@ -125,7 +125,7 @@ resの中には何も入れず、reloginResult.jspにreq,res情報を丸投げ�
 String name = (String)request.getAttribute("name");<br>
 でObject型からString型にキャストしているところ。
 
-#### いつの間にObject型になっていたの？<br>
+#### いつの間にObject型になっていたの？
 インターフェース:javax.servlet.ServletRequest内の<br>
 public Object getAttribute(String name) の処理でObjectになっている。<br>
 このインターフェースを HttpServletRequest が継承していて、それをimportすることで<br>

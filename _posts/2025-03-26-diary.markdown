@@ -1,0 +1,385 @@
+---
+layout: post
+title: ログイン機構
+date: 2025-03-24 23:00:00
+description:  # Add post description (optional)
+img: postimg/tomato_red.png # Add image post (optional)
+fig-caption: # Add figcaption (optional)
+tags: [日記]
+---
+# ログインプログラム1
+コメントはchatGPTに入れてもらっています。
+### login.jsp
+```jsp
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>ログイン画面</title>
+<link rel="stylesheet" type="text/css" href="/chap8/css/style.scc"/>
+</head>
+<body>
+	<h1>ログイン画面</h1>
+	<form action="/chap9/login" method="post">
+		<table>
+			<tr><th>ユーザーID</th><td><input type="text" name="userId"></td></tr>
+			<tr><th>パスワード</th><td><input type="password" name="password"></td></tr>
+			<tr><th>名前</th><td><input type="text" name="name"></td></tr>
+		</table>
+		<input type="submit" value="ログイン">
+	</form>
+</body>
+</html>
+```
+昨日の日記と同様、type="submit"のログインボタンを押したタイミングでformタグの内容がpost型で /chap9/login へと送られている。
+
+### Login.java
+```java
+package domain;
+
+import java.io.Serializable;
+
+// フォームで受け取ったログイン情報を入れておくJavaBeans（シリアライズ対応）
+public class Login implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	// ユーザーIDとパスワードのフィールド（変数）
+	private String userId;
+	private String password;
+
+	// userId のゲッター（取得用）
+	public String getUserId() {
+		return userId;
+	}
+
+	// userId のセッター（設定用）
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	// password のゲッター
+	public String getPassword() {
+		return password;
+	}
+
+	// password のセッター
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	// コンストラクタ（このクラスを new する時に userId と password を指定できる）
+	public Login(String userId, String password) {
+		this.userId = userId;
+		this.password = password;
+	}
+}
+```
+ここでは、後に取り出しやすいようにデータをまとめている。<br>
+このコードに関する以下の内容は、おそらくやや発展的な内容です。
+
+chatGPTさん、コメントのJavaBeansってなに？
+>JSPやJSTL（EL式）で書くときに簡単にプロパティへアクセスできるために<br>
+>データを入れておくための“お行儀の良いクラス”のことですの！<br>
+>簡単に言うと…JavaBeans ＝ 「箱入りのデータクラス」<br>
+>ユーザー情報とか、商品情報とか、フォームの入力内容とか、<br>
+>こういったものを一つのオブジェクトに“ちゃんとした形式で”まとめたものが JavaBeans なのよ
+><br>
+>① デフォルトコンストラクタがある<br>
+>② プロパティは private<br>
+>③ getter/setter を持つ<br>
+>この3つのルールを守っていれば、あなたのクラスも「JavaBeans」ですの
+
+シリアライズってなに？
+>オブジェクトを「バイト列（データのかたまり）」にして保存・送信できるようにすることですの！<br>
+>Javaではこれを 「シリアライズ（直列化）」と呼びますの。<br>
+>そしてそのための準備ができているクラスのことを、「シリアライズ対応」と言うのですわ。
+[シリアライズとは・・・分分分](https://wa3.i-3-i.info/word111503.html "シリアライズ-分分分")
+>avaのオブジェクトは、普通のままでは 保存したり送信したりできませんの。だから…<br>
+>オブジェクトをファイルに保存したい<br>
+>オブジェクトをネットワークで他の場所に送りたい<br>
+>セッションやアプリケーションスコープにオブジェクトを詰めたい<br>
+>こういったとき、Javaはそのオブジェクトを一時的に“バイト列”に変えて扱いますの。<br>
+>それが――シリアライズですの。
+シリアライズに対応させるためには、<br>
+public class Login implements Serializable と書き込むだけ。<br>
+private static final long serialVersionUID = 1L;<br> 
+はオブジェクトの設計番号のイメージ。
+
+### LoginController.java
+```java
+package controller;
+
+import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import domain.Login;
+
+// このサーブレットは「/login」というURLに対応しています
+@WebServlet("/login")
+public class LoginController extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+	// GETリクエストを受け取ったときの処理
+	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		// result.jsp に画面遷移する（リクエストをそのまま渡す）
+		RequestDispatcher rd = req.getRequestDispatcher("/jsp/result.jsp");
+		rd.forward(req, res);
+	}
+
+	// POSTリクエストを受け取ったときの処理（フォーム送信など）
+	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		req.setCharacterEncoding("UTF-8");
+		// フォームから送られてきた userId と password を取得
+		String userId = req.getParameter("userId");
+		String password = req.getParameter("password");
+
+		// 取得した情報を使って Login クラスのインスタンスを作成
+		Login login = new Login(userId, password);
+
+		// ★リクエストスコープに保存（今回のアクセス中のみ利用可能）
+		req.setAttribute("login", login);
+
+		// ★セッションスコープに保存（ブラウザが開いている間はずっと有効）
+		HttpSession session = req.getSession();
+		session.setAttribute("login", login);
+
+		// ★アプリケーションスコープに保存（サーバーが動いている間は全員共通で利用可能）
+		ServletContext application = this.getServletContext();
+		application.setAttribute("login", login);
+
+		// 結果を表示する JSP に転送する
+		RequestDispatcher rd = req.getRequestDispatcher("/jsp/result.jsp");
+		rd.forward(req, res);
+	}
+}
+```
+#### req.setAttribute("login", login);
+reqの情報をrequestスコープに詰め込んでいる(昨日の日記の内容)
+
+#### HttpSession session = req.getSession();
+sessionスコープにreqを詰め込む流れ<br>
+getSession()は、後にreqの中身を詰め込むために、HttpSession型の鞄またはロッカーを持ってくる(無ければ生み出す)ように依頼しているイメージ。<br>
+getSession()で生まれる鞄は必ずHttpSession型になる。<br>
+session.setAttribute("login", login); で、その鞄にreqの情報を詰め込んでいる。
+
+#### ServletContext application = this.getServletContext();
+applicationスコープにreqを詰め込む流れ<br>
+thisはHttpServletを継承したこのクラス自身。<br>
+getServletContext()でそのサーブレット全体共有の棚を見せてと言っている。<br>
+ServletContext application = req.getServletContext(); でも同じ意味。<br>
+application.setAttribute("login", login); で、その棚にreqの情報を詰め込んでいる。
+
+### result.jsp
+```jsp
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>スコープの結果</title>
+<link rel="stylesheet" type="text/css" href="/chap9/css/style.css"/>
+</head>
+<body>
+	<!-- リクエストスコープから userId を取り出して表示 -->
+	<p>リクエストスコープの場合：
+		${requestScope.login.userId}
+	</p>
+
+	<!-- セッションスコープから userId を取り出して表示 -->
+	<p>セッションスコープの場合：
+		${sessionScope.login.userId}
+	</p>
+
+	<!-- アプリケーションスコープから userId を取り出して表示 -->
+	<p>アプリケーションスコープの場合：
+		${applicationScope.login.userId}
+	</p>
+
+	<!-- GETリクエストを送信するフォーム（ボタン） -->
+	<form action="/chap9/login" method="get">
+		<!-- ↓以下の「imput」はtypo（間違い）なので「input」に修正が必要 -->
+		<input type="submit" value="リクエストを発生させる">
+	</form>
+</body>
+</html>
+```
+EL式を利用して、スコープに格納されたデータを参照している。<br>
+このページを表示した時点でrequestスコープは使い切って中身が空になる。<br>
+sessionスコープとapplicationスコープの中身は保持されたまま。
+
+#### <form action="/chap9/login" method="get">
+/chap9/loginへget型でアクセスしている。<br>
+ただし、情報は何も入れていない。
+送られた先も
+```java
+	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		// result.jsp に画面遷移する（リクエストをそのまま渡す）
+		RequestDispatcher rd = req.getRequestDispatcher("/jsp/result.jsp");
+		rd.forward(req, res);
+```
+で/jsp/result.jspへそのまま情報を丸投げしているだけ。<br>
+なので、リクエストを発生させるボタンを押すと、空っぽのrequestスコープの欄が消え、保持されたままのsessionスコープとapllicationスコープが表示されたままになる。<br>
+
+
+# ログインプログラム2
+次のプログラムは、まずJSTLController.javaから起動する。<br>
+（GETリクエストでスタートしている・・・URLを直接開くと、GETリクエストとなる。）
+### JSTLController.java（Servlet）
+```java
+package controller;
+
+import java.io.IOException;
+import java.util.ArrayList;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import domain.Login;
+
+@WebServlet("/JSTLSample") // このServletは「/JSTLSample」というURLで呼び出される
+public class JSTLController extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+	// GETリクエストが来たときの処理
+	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		
+		// Loginクラスのインスタンス（ユーザー情報）を4つ作成
+		Login login1 = new Login("user01", "password");
+		Login login2 = new Login("user02", "password");
+		Login login3 = new Login("user03", "password");
+		Login login4 = new Login("user04", "password");
+		
+		// ユーザー一覧を格納するリストを作成
+		ArrayList<Login> userList = new ArrayList<>();
+		userList.add(login1);
+		userList.add(login2);
+		userList.add(login3);
+		userList.add(login4);
+		
+		// リクエストスコープに「login」と「userList」という名前でデータを保存
+		req.setAttribute("login", login1); // loginという名前で単体ユーザーを格納
+		req.setAttribute("userList", userList); // userListという名前でリストを格納
+		
+		// JSTLSample.jspへ画面遷移（フォワード）
+		RequestDispatcher rd = req.getRequestDispatcher("/jsp/JSTLSample.jsp");
+		rd.forward(req, res);
+	}
+}
+```
+このプログラムのdoGetメソッド内で、自身でreqの中にデータを入れ込み、それを/jsp/JSTLSample.jspに送っている。
+
+### JSTLSample.jsp（JSPページ）
+```jsp
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<!--
+  ↑ JSPの設定。上はページディレクティブで文字コードなどを設定。
+	どういう文字コードで書かれているか,どういう形式でブラウザに送るか。
+  下は JSTL（JSP Standard Tag Library）を使うための宣言。
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>スコープの結果</title>
+<link rel="stylesheet" type="text/css" href="/chap9/css/style.css"/>
+</head>
+<body>
+
+	<!-- loginオブジェクトのuserIdがnullでない（つまり存在する）ときだけ表示 -->
+	<c:if test="${login.userId != null}">
+		<p>あなたのユーザーIDは${login.userId}です</p><br>
+	</c:if>
+
+	<!-- loginオブジェクトのpasswordがnullのときに表示（ちょっと不自然ですが、あえて例として） -->
+	<c:if test="${login.password == null}">
+		<p>あなたのパスワードは${login.password}です</p><br>
+	</c:if>
+
+	<!-- 0〜9までの数字を1つずつ出力 -->
+	<c:forEach var="i" begin="0" end="9" step="1">
+		<c:out value="${i}"/>
+	</c:forEach><br>
+
+	<!-- userListの中身（Login型のリスト）を1件ずつ表示 -->
+	<c:forEach var="loginUser" items="${userList}">
+		<p>ユーザーID：${loginUser.userId}、パスワード：${loginUser.password}</p><br>
+	</c:forEach>
+
+</body>
+</html>
+```
+#### forEach
+上のコードのforEachの数字を出力している部分は、javaでいう
+```java
+for (int i = 0; i < 10; i++) {
+    System.out.println(i);
+}
+```
+と同じ意味。
+
+ユーザーIDとパスワードのスコープを参照している部分をJavaにすると
+```java
+//拡張for文
+for (Login loginUser : userList) {
+    out.println("<p>ユーザーID：" + loginUser.getUserId() +
+                "、パスワード：" + loginUser.getPassword() + "</p><br>");
+}
+```
+になる。
+
+#### forEachの中のvarについて
+jspのvarとJavaのvarは別物らしい。<br>
+chatGPT曰く、<br>
+jspのvarは「このループ中に使う一時的な変数を この名前で扱います」というただの名前指定であり、<br>
+Javaのような型推論は行っていないとのこと。
+
+
+# 以下、その他の事柄
+### トマトジュース
+トマトジュースには血圧を下げる作用があると聞きました。どの物質が作用しているのですか？<br>
+<small>chatGPT</small>
+>そう、トマトジュースが血圧を下げる効果があるとされておりますのは、主に「リコピン」という成分のおかげでございますわ。<br>
+>このリコピンは、トマトに豊富に含まれる赤い色素のカロテノイドの一種で、強い抗酸化作用を持っておりますの。<br>
+>そのおかげで、血管の老化を防いだり、血流を良くしたりすることで、高血圧の予防や改善に役立つとされておりますのよ。<br>
+>それに加えて、トマトジュースにはカリウムも多く含まれておりますわ。<br>
+>このカリウムは、体内の余分なナトリウム（塩分）を排出する働きがございますから、血圧を自然に下げる助けになりますの。
+厳密には、リコピンには血中の善玉コレステロールを増やすという働きがあり、それによって抗酸化作用がもたらされ、間接的に血圧にも効果がある？みたいです。<br>
+直接血圧を下げているわけではない模様。
+
+### プロフィールページを作成
+今所属している集団のサイトを意識したアイコンをつくり、[ﾌﾟﾛﾌｨｰﾙ](https://liqrase.github.io/cafe/profile "ﾌﾟﾛﾌｨｰﾙ")ページを作りました。<br>
+スマホで見たらヘッダーが小さくなってしまう問題があるので、後に解決したいと思います。
+
+### future: true
+Jekyllには、_config.ymlファイル内に「future: true」と書きこまないと、投稿時間が未来の記事はページに表示されず、<br>
+逆にこの書き込みを行うと、満員電車記録帳の2100年の記事みたいに投稿時間を遠い未来に指定した記事も表示される、という仕組みがあるようです。<br>
+最初この仕組みを知らず、日記が表示されないぞとchatGPTと共に数時間苦闘しました。<br>
+
+### font awesome
+Font awesomeというwebアイコンフォントを提供してくれるサービスがあり、このJekyllセットでは初期状態でバージョン4のアイコンが一式含まれていました。
+(パソコンでは左下、スマホではオレンジ色の部分)<br>
+しかし、種類数が心許なかったので、最新版の6に対応させました。<br>
+バージョン4ではアイコンセットを利用するためにはインストールする必要があったようですが、最新版は[公式サイト](https://fontawesome.com/ "font awesome")でアカウント登録を行い、公式サイトから提示される１行コードをheaderなどに貼り付けるだけで、アカウント内で利用可能なアイコンが一通り使えるようになるようです(無料のものだけでも十分な量)。
+
+### githubの履歴は自由に消すことはできない！
+うっかり変なことを書いてコミットしてしまった場合、リポジトリごと消して作り直すのが一番手軽らしい。<br>
+これはブログとは相性が悪いぞ…！
+
+
