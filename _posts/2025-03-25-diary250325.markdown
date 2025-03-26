@@ -1,7 +1,7 @@
 ---
 layout: post
 title: ログイン機構
-date: 2025-03-24 21:00:00
+date: 2025-03-25 21:00:00
 description:  # Add post description (optional)
 img: postimg/computer_password_wasureta.png # Add image post (optional)
 fig-caption: # Add figcaption (optional)

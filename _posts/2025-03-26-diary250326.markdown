@@ -1,7 +1,7 @@
 ---
 layout: post
 title: ログイン機構2
-date: 2025-03-24 23:00:00
+date: 2025-03-26 23:00:00
 description:  # Add post description (optional)
 img: postimg/tomato_red.png # Add image post (optional)
 fig-caption: # Add figcaption (optional)

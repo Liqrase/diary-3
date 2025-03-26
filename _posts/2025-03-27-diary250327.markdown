@@ -1,0 +1,51 @@
+---
+layout: post
+title: プチアプリ作成演習1（仮）
+date: 2025-03-27 23:00:00
+description:  # Add post description (optional)
+img: postimg/tomato_red.png # Add image post (optional)
+fig-caption: # Add figcaption (optional)
+tags: [日記]
+---
+
+(ここに27日に学ぶプログラミング関連の話題が入る予定)
+
+## 以下、その他の事柄
+### プロフィールページを改修
+昨日作成した[ﾌﾟﾛﾌｨｰﾙ](https://liqrase.github.io/cafe/profile "ﾌﾟﾛﾌｨｰﾙ")ページを2点改宗しました。<br>
+1点目は、スマホで閲覧してもパソコンで閲覧したみたいに表示されるという問題。
+chatGPTに投げたところ、いくつかのcssコードの修正と共に、
+charset="UTF-8"の後に
+```html
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+```
+を入れていないからだという指摘を受け、これを入れたら解決しました。<br>
+一度、挿入箇所をヘッダーを生成するjs読み込みコードの後にしてしまい、表示をバグらせてしまった模様。
+
+また、プロフィール画像を当初は自作の↓の者にしていたのですが、<br>
+<img src="images/ligreen.png" alt="プロフィール画像" style="width: 150px; height: auto;"><br>
+パッとページを開いて見た時の不快感が強かったので、<br>
+<img src="images/ligreen2.png" alt="プロフィール画像" style="width: 150px; height: auto;"><br>
+を新たに作って変えました。
+
+とはいえ、最初の絵もせっかく作ったことですし、私個人としては元の絵の方が好きだったりするので、<br>
+マウスオーバーしたりスマホでタップをすると、最初の絵が現れる仕組みにしました。
+
+しかし、これらの絵(特に新しい方)は私の似顔絵としてイマイチな気がしてならない。<br>
+他人からどう映って見えているのかが分からないので、何とももどかしくなりました。<br>
+一度似顔絵のプロに描いて貰いたい気分です。
+
+### Githubで無理矢理過去のコミットに戻すコード
+上のプロフィールページの改修の過程で必要になったのでchatGPTに教えて貰いました。<br>
+GithubのHistoryのページでコミットIDを確認し、
+```git
+git reset --hard <コミットID> #完全に撒き戻す
+git push -f origin main #強制push
+```
+共有リポジトリに対して行う時には慎重に！
+
+### Jekyllの日記ファイル名の仕様
+Jekyllの日記投稿用のMarkdownファイル名は、この記事のファイル名 2025-03-27-diary250327.markdown のように、<br>
+日付(YYYY-MM-DD)-タイトル.markdown という形式にする必要があるのですが、<br>
+タイトルの部分を他の記事と同じにしてしまうと、古い同名タイトルの記事を開いたときに新しい方の同名記事が表示されてしまうようです。<br>
+ちょっと面倒くさい。
