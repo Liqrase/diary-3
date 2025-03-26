@@ -1,6 +1,6 @@
 ---
 layout: post
-title: ログイン機構
+title: ログイン機構2
 date: 2025-03-24 23:00:00
 description:  # Add post description (optional)
 img: postimg/tomato_red.png # Add image post (optional)
@@ -381,5 +381,3 @@ Font awesomeというwebアイコンフォントを提供してくれるサー�
 ### githubの履歴は自由に消すことはできない！
 うっかり変なことを書いてコミットしてしまった場合、リポジトリごと消して作り直すのが一番手軽らしい。<br>
 これはブログとは相性が悪いぞ…！
-
-
