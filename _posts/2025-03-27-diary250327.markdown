@@ -7,8 +7,213 @@ img: postimg/text_kakko_kari.png # Add image post (optional)
 fig-caption: # Add figcaption (optional)
 tags: [日記]
 ---
+## プログラム1
+### JdbcSample.java
+```java
+package chap5;
+// chap5 パッケージ内のクラスです
 
-(ここに27日に学ぶプログラミング関連の話題が入る予定)
+// データベースとの接続を表すクラス
+import java.sql.Connection;
+// データベースとの接続を作るためのクラス
+import java.sql.DriverManager;
+// プレースホルダー（?）付きのSQLを準備するクラス
+import java.sql.PreparedStatement;
+// SELECT文の実行結果を受け取るクラス（結果の入れ物）
+import java.sql.ResultSet;
+// SQLや接続時のエラーが起きたときに投げられる「例外」クラス
+import java.sql.SQLException;
+
+ublic class JdbcSample {
+  //データベースマネジメントシステム(DBMS)へアクセスするために必要な情報を定数として作成
+	private static final String DB_URL = "jdbc:postgresql://localhost:5432/postgres"; 
+	private static final String DB_USER = "postgres";
+	private static final String DB_PASS = "password";
+
+	public static void main(String args[]) throws ClassNotFoundException, SQLException {
+		// DBに接続する
+		Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
+		// 使用したいSQL文を定義する。?はステークホルダー
+		String sql = "SELECT id, password, name, login_id FROM sample_users WHERE id = ?";
+		PreparedStatement ps = conn.prepareStatement(sql);
+		ps.setInt(1, 3); // id = 3 のレコードを検索
+		
+		ResultSet rs = ps.executeQuery();
+		if (rs.next()) {
+			int id = rs.getInt("id");
+			String password = rs.getString("password");
+			String name = rs.getString("name");
+			String loginId = rs.getString("login_id"); 
+			System.out.print(id + "," + password + "," + name + "," + loginId);
+		}
+	}
+}
+```
+#### Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
+ユーザーデータ等を渡して、返り値としてデータベースとの接続のパイプがconnに代入されているイメージ。
+
+#### PreparedStatement ps = conn.prepareStatement(sql);
+preparedStatment は、java.sqlパッケージに含まれているクラス。<br>
+String sqlで作った分を入れて、?の位置に色々なものを入れられるようにしている。<br>
+>データベースに送るSQL文を、事前に準備（=Prepare）しておくための 特別な箱 を作っていますの
+
+SQLインジェクション対策や、再利用によるパフォーマンス向上などに一役買っている。
+
+#### ResultSet rs = ps.executeQuery();
+ここでSQL文を実行している。<br>
+ps.setInt(1, 3); は値をセットしているだけで、実行しているわけではない。<br>
+SQL文が間違えていたら、ここでエラーが出てくる。
+
+#### rs.next()
+rsの中を見て、0行目からスタートして、次の行があればtrueを返してその行に進む、無ければfalseを返してループを終了する、というイメージ。
+
+
+## プログラム2
+### SampleUsersDTO.java
+```java
+package chap5;
+// このクラスが chap5 パッケージの中にあることを表します
+
+public class SampleUsersDTO {
+	// --- フィールド（データを保存する変数） ---
+	private int id;           // ユーザーID（数値）
+	private String loginId;   // ログインID（例: ユーザー名やメールアドレスなど）
+	private String password;  // パスワード（ハッシュ化されてると理想的）
+	private String name;      // 表示用の名前（例: 鈴木 太郎）
+
+	// --- ゲッターとセッター（データの出し入れをするためのメソッド） ---
+
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getLoginId() {
+		return loginId;
+	}
+	public void setLoginId(String loginId) {
+		this.loginId = loginId;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+}
+```
+>DTOとは「Data Transfer Object（データ転送オブジェクト）」の略でして、主にシステム内でデータをやり取りするためのシンプルなオブジェクトでございますわ。<br>
+><br>
+>具体的に申しますと…<br>
+>DTOは、データベースや外部APIから受け取ったデータをまとめて他の層（クラスやモジュール）に渡すための入れ物ですの。<br>
+>ロジックは一切持たず、ただデータを保持するためだけのものですわ。
+
+
+### SampleUsersDAO.java
+```java
+package chap5;
+// このクラスが chap5 パッケージの中にあることを示しています
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+// JDBCでデータベースに接続・操作するためのクラスたちと、リスト操作に必要なクラスを読み込みます
+
+public class SampleUsersDAO {
+	private Connection conn; // データベースとの接続を保持するための変数
+
+	// コンストラクタ：このDAOが作られるときに接続情報(conn)を受け取って保存しておきます
+	public SampleUsersDAO(Connection conn) {
+		this.conn = conn;
+	}
+
+	// ユーザー情報を取得するメソッド。id以下のユーザーをすべて返します（リストで）
+	public ArrayList<SampleUsersDTO> selectAll(int id) throws SQLException {
+		String sql = "SELECT id,password,name,login_id FROM sample_users WHERE id <= ?";
+		PreparedStatement ps = conn.prepareStatement(sql);
+		ps.setInt(1, id);
+		ResultSet rs = ps.executeQuery();
+
+		ArrayList<SampleUsersDTO> list = new ArrayList<SampleUsersDTO>();
+		while (rs.next()) {
+			SampleUsersDTO dto = new SampleUsersDTO();
+			dto.setId(rs.getInt("id"));
+			dto.setPassword(rs.getString("password"));
+			dto.setName(rs.getString("name"));
+			dto.setLoginId(rs.getString("login_id"));
+			list.add(dto);
+		}
+    // データベースとの接続を切断
+		conn.close();
+		return list;
+	}
+}
+```
+#### 	public SampleUsersDAO(Connection conn) {this.conn = conn;}
+外部から引数で渡されたconn(ここでは接続情報)を保存しておくコンストラクタ。<br>
+渡された接続情報をこのクラス内で使用できるようにする。
+
+
+### Main.java
+```java
+package chap5;
+// このクラスが「chap5」というパッケージ（フォルダ）に属していることを表します
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.ArrayList;
+// データベース操作に必要なクラスや、リストを扱うクラスを読み込んでいます
+
+public class Main {
+
+	// データベースのURL、ユーザー名、パスワードを定数として定義します
+	private static final String DB_URL = "jdbc:postgresql://localhost:5432/postgres"; // データベース名は「postgres」
+	private static final String DB_USER = "postgres";    // データベースのログインユーザー名
+	private static final String DB_PASS = "password";    // データベースのパスワード（実際には環境変数で管理するのが安全）
+
+	public static void main(String[] args) throws SQLException {
+		// プログラムのエントリーポイント（ここから処理が始まります）
+
+		Connection conn = null; // データベース接続用の変数を用意
+
+		// データベースに接続します
+		conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
+
+		// DAO（データベースアクセス専用のクラス）を作成。接続情報を渡します
+		SampleUsersDAO dao = new SampleUsersDAO(conn);
+
+		// ユーザー情報をデータベースから取得します（条件：idが3以下のユーザー）
+		ArrayList<SampleUsersDTO> list = dao.selectAll(3);
+
+		// 取得したユーザー情報を1件ずつ表示します
+		for (SampleUsersDTO dto : list)
+			System.out.println(
+				dto.getId() + "," +               // ユーザーID
+				dto.getPassword() + "," +         // パスワード
+				dto.getName() + "," +             // 名前
+				dto.getLoginId()                  // ログインID（またはログイン情報）
+			);
+	}
+}
+```
+#### ArrayList<SampleUsersDTO> list = dao.selectAll(3);
+dao.selectAll(3); を実行することで<br>
+SELECT * FROM sample_users WHERE id <= 3 が実行され、<br>
+IDが 1〜3 のユーザー情報が全部まとめて返り値としてlistに代入される。
+
 
 ## 以下、その他の事柄
 ### プロフィールページを改修
@@ -49,3 +254,10 @@ Jekyllの日記投稿用のMarkdownファイル名は、この記事のファイ
 日付(YYYY-MM-DD)-タイトル.markdown という形式にする必要があるのですが、<br>
 タイトルの部分を他の記事と同じにしてしまうと、古い同名タイトルの記事を開いたときに新しい方の同名記事が表示されてしまうようです。<br>
 ちょっと面倒くさい。
+
+### かくかくしかじか1巻を読破
+一昨日メモをした『かくかくしかじか』1巻を読破しました。<br>
+この後まだまだ面白くなるらしいので、続きも読みたい。
+
+
+メモ：BUCK-TICK『無限 LOOP』
