@@ -3,7 +3,7 @@ layout: post
 title: プチアプリ作成演習1（仮）
 date: 2025-03-27 23:00:00
 description:  # Add post description (optional)
-img: postimg/text_kakko_kari.png # Add image post (optional)
+img: postimg/computer_data_center.png # Add image post (optional)
 fig-caption: # Add figcaption (optional)
 tags: [日記]
 ---
