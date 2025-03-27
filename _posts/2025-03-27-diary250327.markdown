@@ -1,6 +1,6 @@
 ---
 layout: post
-title: プチアプリ作成演習1（仮）
+title: DAO,DTO
 date: 2025-03-27 23:00:00
 description:  # Add post description (optional)
 img: postimg/computer_data_center.png # Add image post (optional)
