@@ -3,7 +3,7 @@ layout: post
 title: DAO,DTO
 date: 2025-03-27 23:00:00
 description:  # Add post description (optional)
-img: postimg/computer_data_center.png # Add image post (optional)
+img: postimg/250327_dao.png # Add image post (optional)
 fig-caption: # Add figcaption (optional)
 tags: [日記]
 ---
@@ -228,9 +228,9 @@ charset="UTF-8"の後に
 一度、挿入箇所をヘッダーを生成するjs読み込みコードの後にしてしまい、表示をバグらせてしまった模様。
 
 また、プロフィール画像を当初は自作の↓の者にしていたのですが、<br>
-<img src="../assets/img/postimg/ligreen.png" alt="プロフィール画像" style="width: 150px; height: auto;"><br>
+<img src="../assets/img/postimg/250327_ligreen.png" alt="プロフィール画像" style="width: 150px; height: auto;"><br>
 パッとページを開いて見た時の不快感が強かったので、<br>
-<img src="../assets/img/postimg/ligreen2.png" alt="プロフィール画像" style="width: 150px; height: auto;"><br>
+<img src="../assets/img/postimg/250327_ligreen2.png" alt="プロフィール画像" style="width: 150px; height: auto;"><br>
 を新たに作って変えました。
 
 とはいえ、最初の絵もせっかく作ったことですし、私個人としては元の絵の方が好きだったりするので、<br>

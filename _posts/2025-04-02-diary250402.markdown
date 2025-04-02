@@ -1,0 +1,28 @@
+---
+layout: post
+title: 前掛けデビュー
+date: 2025-04-02 23:00:00
+description:  # Add post description (optional)
+img: postimg/250402_maebagoji.png # Add image post (optional)
+fig-caption: # Add figcaption (optional)
+tags: [日記]
+---
+今日のプログラム関連の話題は[こっち](https://liqrase.github.io/diary-1/miniapp/)に書きました。<br>
+そして各日記のサムネイルをchatGPTに任せることにしました。<br>
+最近画像生成のクオリティが一気に進歩して、踊ログばかりです。
+
+さて、Amazonで購入したリュック型ビジネスバッグが届きました。
+
+<img src="../assets/img/postimg/250402_bizbug.png" alt="新御茶ノ水地下看板" style="width: 300px; height: auto;"><br>
+
+これで私も満員電車の前掛けビジネスリュックマンの仲間入りだぜ！！<br>
+
+今まで書籍の角を感じさせるゴツゴツした手提げかばんで過ごしていた私が、<br>
+遂に前掛けリュックの前方の絶妙なふわふわ具合を前の人に提供できる側になるんですよ…！<br>
+そして見てくださいよこのギュウギュウになりながらも前方に僅かに生まれるパーソナルスペース…、<br>
+美しい…！<br>
+
+東西線に乗るようになってから、それは私の夢だった。<br>
+憧れていたんだ、前掛けビジネスリュックマンに。
+
+私、電車乗ってきます！！！！！！！

@@ -3,7 +3,7 @@ layout: post
 title: 新御茶ノ水駅の罠
 date: 2025-04-01 23:00:00
 description:  # Add post description (optional)
-img: postimg/sinocha.png # Add image post (optional)
+img: postimg/250401_sinocha.png # Add image post (optional)
 fig-caption: # Add figcaption (optional)
 tags: [日記]
 ---
@@ -17,7 +17,7 @@ tags: [日記]
 そして看板の示すまま丸の内線側のホームに向かって歩き出したのですが、<br>
 歩いている途中で見つけた地図がこれ。
 
-<img src="../assets/img/postimg/sinocha-2.png" alt="新御茶ノ水地下看板" style="width: 500px; height: auto;"><br>
+<img src="../assets/img/postimg/250401_sinocha-2.png" alt="新御茶ノ水地下看板" style="width: 500px; height: auto;"><br>
 
 えっ、丸の内線ホーム、駅名違うし(よく確認していなかった)遠っ！<br>
 というか、今向かっている淡路町駅よりも御茶ノ水駅に向かっていた方が少し近くない！？
