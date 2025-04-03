@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 前掛けデビュー
+title: かくしか読破
 date: 2025-04-03 23:00:00
 description:  # Add post description (optional)
 img: postimg/250403_shika.png # Add image post (optional)
