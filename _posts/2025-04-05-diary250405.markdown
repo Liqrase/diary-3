@@ -9,7 +9,7 @@ tags: [日記]
 ---
 GithubPagesは基本的に静的サイトまでしか公開できないので、<br>
 Javaアプリなども自前で公開できるようにするために、<br>
-[ConohaVPS1](https://www.conoha.jp/vps/)を契約して、ついでにドメインまで取得しちゃって、<br>
+[ConohaVPS1](https://www.conoha.jp/vps/)を契約して、ついでにドメインまで取得して、<br>
 私の[トップページ](https://www.liqrase.net/)と[プロフィールページ](https://www.liqrase.net/profile.html)、を移設しました！<br>
 
 知らないことだらけなので、chatGPTと共にひたすら悪戦苦闘…<br>
