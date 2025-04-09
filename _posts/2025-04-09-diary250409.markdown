@@ -1,13 +1,13 @@
 ---
 layout: post
-title: 文字列ジェネレータ
+title: ピアノページを公開
 date: 2025-04-09 23:00:00
 description:  # Add post description (optional)
 img: postimg/250409_vpiano.png # Add image post (optional)
 fig-caption: # Add figcaption (optional)
 tags: [日記]
 ---
-[クリック/タップで音が鳴る3オクターブのピアノページ](https://liqrase.net/piano)を作成しました。<br>
+[クリック/タップで音が鳴る3オクターブのピアノページ](https://liqrase.net/piano)を作成公開しました。<br>
 ほぼJavascriptとCSSで作られたものなのですが、私はJavascriptの知識は「Javaとは違う」くらいしか無く、<br>
 CSSに対してはそれほど熱意がない故に知識も浅いため、chatGPTさんの力の賜物です。AIすげー。<br>
 (昨日の23時から3時半まで戦いました)
