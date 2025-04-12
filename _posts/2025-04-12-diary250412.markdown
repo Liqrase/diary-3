@@ -35,26 +35,29 @@ tags: [日記, FF14]
 カルンフェイス・・・の親戚みたいなキャラの「アヴァアドポア」というモンスターです。<br>
 彼は、光るタイル床の上で無ければ、どんなに倒されても復活するという不屈の戦士だったのですが、<br>
 なんとアップデートで、その復活できなくなる床の上に初期状態で、動けない状態で配置されるという酷い目に…。
-![](https://github.com/Liqrase/diary-3/blob/main/assets/img/postimg/250412_avo1.png?raw=true)
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+<img src="https://github.com/Liqrase/diary-3/blob/main/assets/img/postimg/250412_avo1.png?raw=true" width="400"><br>
+</div>
 しかも(印象は薄いですが)闇属性魔法のダンジョンなのにファイアにされるという屈辱的な仕打ちまでされていました。<br>
 かわいそう！
 
-![](/assets/img/postimg/50412_avo2.png)
+<img src="https://github.com/Liqrase/diary-3/blob/main/assets/img/postimg/250412_avo2.png?raw=true" width="400"><br>
 アヴァアドポア「わァ…ぁ…」<br>
 泣いちゃった！
 
 動けなくなってしまったということは、彼を誘導しての
-![](/assets/img/postimg/50412_avo3.png)
-こういう画像や
-<img src="https://github.com/Liqrase/diary-3/blob/main/assets/img/postimg/250412_avo4.png?raw=true" width="400"><br>
+<img src="https://github.com/Liqrase/diary-3/blob/main/assets/img/postimg/250412_avo3.png?raw=true" width="400"><br>
+こういう画像や<br>
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+![](https://github.com/Liqrase/diary-3/blob/main/assets/img/postimg/250412_avo4.png?raw=true" width="400)<br>
+</div>
 こういう画像ももう撮れないということですね…。
 
 そして、ラスボスの従者のような形で登場していた、また別の親戚キャラの「アーゼマジュラー」はリストラ。<br>
 合掌。
 
 ボス3体の変化を挙げると長くなりすぎるので、あとは道中の変化を一つ。
-<img src="/main/assets/img
-/postimg/250412_avo5.png" width="400"><br>
+<img src="https://github.com/Liqrase/diary-3/blob/main/assets/img/postimg/250412_avo5.png?raw=true" width="400"><br>
 今まではこの位置からジャンプしてタイミングを合わせれば、奥の敵に挑発やエアロなどを当てることが出来ていたのですが、修正されていました。
 
 カルンよ、想い出をありがとう。
