@@ -5,8 +5,9 @@ date: 2025-04-12 23:00:00
 description:  # Add post description (optional)
 img: postimg/250412_qiqaru.png # Add image post (optional)
 fig-caption: # Add figcaption (optional)
-tags: [日記][FF14]
+tags: [日記], [FF14]
 ---
+
 オンラインゲーム『ファイナルファンタジーXIV』に大量にあるダンジョンの中の1つ「カルン埋没寺院」が、パッチ7.2のアップデートで色々変わったと聞いたので、久々に潜ってみました。
 
 カルン(Qarn)埋没寺院と言えば、筆者が2月に作ったGmailのアドレスの文字列にも含まれる位にお気に入りのダンジョン！<br>
