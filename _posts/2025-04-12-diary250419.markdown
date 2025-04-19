@@ -1,0 +1,17 @@
+---
+layout: post
+title: 画面遷移図を製作
+date: 2025-04-19 23:00:00
+description:  # Add post description (optional)
+img: postimg/250419_seni.png # Add image post (optional)
+fig-caption: # Add figcaption (optional)
+tags: [日記,Java]
+---
+
+今日はMiroというサービスに登録して、今講習で作っているアプリの画面遷移図を作りました。<br>
+[これです。](https://miro.com/app/board/uXjVIA-T4Es=/?share_link_id=907087375839)
+
+ControllerとServiceとDAOを組み込むことで、Controllerを利用してそのまま元のページに戻るみたいな遷移にも対応することが出来ました。<br>
+これを作るのに5時間は掛けた気がするｗ
+
+ちなみにアプリ自体の進捗状況は、製作そのものは遷移図一番下のtebiki.htmlというあっても無くても良いページを作るのみで、来週は発表に向けた作業がメインとなります。
