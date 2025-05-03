@@ -1,0 +1,16 @@
+---
+layout: post
+title: ノートパソコンを購入
+date: 2025-05-03 23:00:00
+description:  # Add post description (optional)
+img: postimg/250503-main.png # Add image post (optional)
+fig-caption: # Add figcaption (optional)
+tags: [日記]
+---
+
+リモート面談に向けて、ノートパソコンを購入しました。<br>
+メインはデスクトップかつパソコンの性能事情には詳しくないので、BTO系でビジネスで使える安いものから適当に。
+
+そして、久しぶりに物置からトラックボールマウスを探し出して、これで完璧！<br>
+やはりノートパソコンはトラックボールマウスの使用に限る！<br>
+トラックボールは操作に地面が必要ないため、ベッドで寝ながらみたいなどんな姿勢でも自由に扱えるのが魅力的です！
